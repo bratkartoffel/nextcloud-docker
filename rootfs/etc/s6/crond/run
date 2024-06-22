@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [[ -x /usr/bin/doas ]]; then
+	exe=/usr/bin/doas
+else
+	exe=/usr/bin/sudo
+fi
+exec $exe /usr/sbin/crond -f

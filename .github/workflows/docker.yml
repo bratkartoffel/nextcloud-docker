@@ -1,0 +1,82 @@
+name: Docker
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '25 23 * * 0'
+  push:
+    branches: [ "master" ]
+
+env:
+  REGISTRY: docker.io
+  IMAGE_NAME: bratkartoffel/web
+  IMAGE_DESCRIPTION: apache2 running on alpine in docker
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        phpVersion:
+          - "nophp"
+          - "8.1"
+          - "8.2"
+          - "8.3"
+    permissions:
+      contents: read
+
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        with:
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            auth.docker.io:443
+            dl-cdn.alpinelinux.org:443
+            github.com:443
+            index.docker.io:443
+            production.cloudflare.docker.com:443
+            registry-1.docker.io:443
+
+      - name: Checkout repository
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@d70bba72b1f3fd22344832f00baa16ece964efeb # v3.3.0
+
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@0d4c9c5ea7693da7b068278f7b52bda2a190a446 # v3.2.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5.5.1
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            ${{ matrix.phpVersion }}
+          labels: |
+            org.opencontainers.image.authors=Simon Frankenberger <simon-docker@fraho.eu>
+            org.opencontainers.image.licenses=MIT
+            org.opencontainers.image.title=${{ env.IMAGE_DESCRIPTION }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.url=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.source=${{ github.repositoryUrl }}
+
+      - name: Build and push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
+        with:
+          context: .
+          file: Dockerfile-${{ matrix.phpVersion }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
