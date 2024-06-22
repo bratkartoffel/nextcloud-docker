@@ -9,21 +9,13 @@ on:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: bratkartoffel/web
-  IMAGE_DESCRIPTION: apache2 running on alpine in docker
+  IMAGE_NAME: bratkartoffel/nextcloud
+  IMAGE_DESCRIPTION: nextcloud running on alpine in docker
 
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        phpVersion:
-          - "nophp"
-          - "8.1"
-          - "8.2"
-          - "8.3"
     permissions:
       contents: read
 
@@ -61,7 +53,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            ${{ matrix.phpVersion }}
+            test
           labels: |
             org.opencontainers.image.authors=Simon Frankenberger <simon-docker@fraho.eu>
             org.opencontainers.image.licenses=MIT
@@ -75,7 +67,6 @@ jobs:
         uses: docker/build-push-action@31159d49c0d4756269a0940a750801a1ea5d7003 # v6.1.0
         with:
           context: .
-          file: Dockerfile-${{ matrix.phpVersion }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
