@@ -7,6 +7,7 @@ set -o errexit -o pipefail
 readonly APP_HOMEDIR=/usr/share/webapps/nextcloud
 readonly APP_LOGDIR="$APP_HOMEDIR"/../logs
 readonly APP_TMPDIR="$APP_HOMEDIR"/../tmp
+readonly APP_CONFDIR=/etc/nextcloud
 
 : "${APP_UMASK:=027}"
 : "${APP_UID:=509}"
@@ -17,7 +18,7 @@ readonly APP_TMPDIR="$APP_HOMEDIR"/../tmp
 : "${SMTPHOST:=localhost}"
 : "${SERVERNAME:=localhost}"
 
-export APP_HOMEDIR APP_LOGDIR APP_TMPDIR SMTPHOST SERVERNAME
+export APP_HOMEDIR APP_LOGDIR APP_TMPDIR APP_CONFDIR SMTPHOST SERVERNAME
 
 copyAndApplyVariables() {
   local source_dir="$1/"
@@ -66,6 +67,7 @@ if [ "$(id -u)" -eq 0 ]; then
   echo ">> fixing permissions"
   install -dm 2750 -o "$APP_UID" -g "$APP_GID"   "$APP_HOMEDIR"
   install -dm 0750 -o "$APP_UID" -g "$APP_GID"   "/tmp/nginx"
+  install -dm 0750 -o "$APP_UID" -g "$APP_GID"   "$APP_CONFDIR"
   install -dm 0770 -o root -g "$APP_GID"         "$APP_LOGDIR"
   install -dm 0770 -o "$APP_UID" -g "$APP_GID"   "$APP_TMPDIR"
   install -dm 0750 -o "$APP_UID" -g "$APP_GID"   "$APP_PHP_CONF_DIR"
