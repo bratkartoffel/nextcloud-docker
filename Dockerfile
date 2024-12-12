@@ -1,30 +1,30 @@
-FROM alpine:3.20
+FROM alpine:3.21
 
 # upgrade system / install apache
 RUN apk upgrade --no-cache \
         && apk add --no-cache \
 	nginx \
-	php82-fpm \
-	php82-pecl-apcu \
-	php82-imap \
-	php82-opcache \
-	php82-pdo \
-	php82-pdo_pgsql \
-	php82-pecl-imagick \
-	nextcloud \
-	nextcloud-cloud_federation_api \
-	nextcloud-comments \
-	nextcloud-default-apps \
-	nextcloud-federation \
-	nextcloud-files_reminders \
-	nextcloud-files_trashbin \
-	nextcloud-files_versions \
-	nextcloud-firstrunwizard \
-	nextcloud-pgsql \
-	nextcloud-sharebymail \
-	nextcloud-support \
-	nextcloud-systemtags \
-	nextcloud-user_status \
+	php83-fpm \
+	php83-pecl-apcu \
+	php83-imap \
+	php83-opcache \
+	php83-pdo \
+	php83-pdo_pgsql \
+	php83-pecl-imagick \
+	nextcloud29 \
+	nextcloud29-cloud_federation_api \
+	nextcloud29-comments \
+	nextcloud29-default-apps \
+	nextcloud29-federation \
+	nextcloud29-files_reminders \
+	nextcloud29-files_trashbin \
+	nextcloud29-files_versions \
+	nextcloud29-firstrunwizard \
+	nextcloud29-pgsql \
+	nextcloud29-sharebymail \
+	nextcloud29-support \
+	nextcloud29-systemtags \
+	nextcloud29-user_status \
         s6 setpriv doas \
 	# remove default php config
 	&& (if [ -d /etc/php*/php-fpm.d/ ]; then rm -v /etc/php*/php-fpm.d/*; fi)
