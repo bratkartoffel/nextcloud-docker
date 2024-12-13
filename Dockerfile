@@ -20,6 +20,7 @@ RUN apk upgrade --no-cache \
 	nextcloud29-files_trashbin \
 	nextcloud29-files_versions \
 	nextcloud29-firstrunwizard \
+	nextcloud29-occ \
 	nextcloud29-pgsql \
 	nextcloud29-sharebymail \
 	nextcloud29-support \
