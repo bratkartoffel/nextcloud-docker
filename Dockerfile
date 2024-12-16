@@ -18,6 +18,7 @@ RUN apk upgrade --no-cache \
 	nextcloud${NC_VERSION}-comments \
 	nextcloud${NC_VERSION}-default-apps \
 	nextcloud${NC_VERSION}-federation \
+	nextcloud${NC_VERSION}-files_downloadlimit \
 	nextcloud${NC_VERSION}-files_reminders \
 	nextcloud${NC_VERSION}-files_trashbin \
 	nextcloud${NC_VERSION}-files_versions \
