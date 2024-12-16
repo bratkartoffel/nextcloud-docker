@@ -24,6 +24,7 @@ RUN apk upgrade --no-cache \
 	nextcloud${NC_VERSION}-files_versions \
 	nextcloud${NC_VERSION}-firstrunwizard \
 	nextcloud${NC_VERSION}-occ \
+	nextcloud${NC_VERSION}-photos \
 	nextcloud${NC_VERSION}-pgsql \
 	nextcloud${NC_VERSION}-sharebymail \
 	nextcloud${NC_VERSION}-support \
