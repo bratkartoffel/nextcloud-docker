@@ -14,6 +14,7 @@ RUN apk upgrade --no-cache \
 	php83-pdo_pgsql \
 	php83-pecl-imagick \
 	nextcloud${NC_VERSION} \
+	nextcloud${NC_VERSION}-activity \
 	nextcloud${NC_VERSION}-cloud_federation_api \
 	nextcloud${NC_VERSION}-comments \
 	nextcloud${NC_VERSION}-default-apps \
