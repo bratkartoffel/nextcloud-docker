@@ -18,7 +18,7 @@ readonly APP_CONFDIR=/etc/nextcloud
 : "${SMTPHOST:=localhost}"
 : "${SERVERNAME:=localhost}"
 
-export APP_HOMEDIR APP_LOGDIR APP_TMPDIR APP_CONFDIR SMTPHOST SERVERNAME
+export APP_HOMEDIR APP_LOGDIR APP_TMPDIR APP_CONFDIR APP_USER SMTPHOST SERVERNAME
 
 copyAndApplyVariables() {
   local source_dir="$1/"
@@ -47,7 +47,10 @@ if [ "$(id -u)" -eq 0 ]; then
 
   echo ">> adding unprivileged user (uid: $APP_UID / gid: $APP_GID)"
   addgroup -g "$APP_GID" "$APP_GROUP"
-  adduser -HD -h "$APP_HOMEDIR" -s /sbin/nologin -G "$APP_GROUP" -u "$APP_UID" -k /dev/null "$APP_USER"
+  adduser -HD -h "$APP_HOMEDIR" -s /bin/ash -G "$APP_GROUP" -u "$APP_UID" -k /dev/null "$APP_USER"
+
+  echo ">> Installing crontab"
+  mv -v /etc/crontabs/root /etc/crontabs/"$APP_USER"
 
   echo ">> installing configuration"
   if [ -x /usr/sbin/php-fpm81 ]; then
