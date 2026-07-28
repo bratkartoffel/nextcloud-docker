@@ -1,36 +1,35 @@
 FROM alpine:3.24
 
-ARG NC_VERSION=33
-ARG PHP_VERSION=85
+ENV NC_VERS=33 PHP_VERS=85
 
 # upgrade system / install apache
 RUN apk upgrade --no-cache \
         && apk add --no-cache \
 	nginx \
-	php${PHP_VERSION}-fpm \
-	php${PHP_VERSION}-imap \
-	php${PHP_VERSION}-pdo_pgsql \
-	php${PHP_VERSION}-pecl-apcu \
-	php${PHP_VERSION}-pecl-imagick \
-	nextcloud${NC_VERSION} \
-	nextcloud${NC_VERSION}-activity \
-	nextcloud${NC_VERSION}-app_api \
-	nextcloud${NC_VERSION}-cloud_federation_api \
-	nextcloud${NC_VERSION}-comments \
-	nextcloud${NC_VERSION}-default-apps \
-	nextcloud${NC_VERSION}-federation \
-	nextcloud${NC_VERSION}-files_downloadlimit \
-	nextcloud${NC_VERSION}-files_reminders \
-	nextcloud${NC_VERSION}-files_trashbin \
-	nextcloud${NC_VERSION}-files_versions \
-	nextcloud${NC_VERSION}-firstrunwizard \
-	nextcloud${NC_VERSION}-occ \
-	nextcloud${NC_VERSION}-photos \
-	nextcloud${NC_VERSION}-pgsql \
-	nextcloud${NC_VERSION}-sharebymail \
-	nextcloud${NC_VERSION}-support \
-	nextcloud${NC_VERSION}-systemtags \
-	nextcloud${NC_VERSION}-user_status \
+	php${PHP_VERS}-fpm \
+	php${PHP_VERS}-imap \
+	php${PHP_VERS}-pdo_pgsql \
+	php${PHP_VERS}-pecl-apcu \
+	php${PHP_VERS}-pecl-imagick \
+	nextcloud${NC_VERS} \
+	nextcloud${NC_VERS}-activity \
+	nextcloud${NC_VERS}-app_api \
+	nextcloud${NC_VERS}-cloud_federation_api \
+	nextcloud${NC_VERS}-comments \
+	nextcloud${NC_VERS}-default-apps \
+	nextcloud${NC_VERS}-federation \
+	nextcloud${NC_VERS}-files_downloadlimit \
+	nextcloud${NC_VERS}-files_reminders \
+	nextcloud${NC_VERS}-files_trashbin \
+	nextcloud${NC_VERS}-files_versions \
+	nextcloud${NC_VERS}-firstrunwizard \
+	nextcloud${NC_VERS}-occ \
+	nextcloud${NC_VERS}-photos \
+	nextcloud${NC_VERS}-pgsql \
+	nextcloud${NC_VERS}-sharebymail \
+	nextcloud${NC_VERS}-support \
+	nextcloud${NC_VERS}-systemtags \
+	nextcloud${NC_VERS}-user_status \
         s6 setpriv doas \
 	# remove default php config
 	&& (if [ -d /etc/php*/php-fpm.d/ ]; then rm -v /etc/php*/php-fpm.d/*; fi)

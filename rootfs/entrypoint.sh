@@ -84,7 +84,7 @@ if [ "$(id -u)" -eq 0 ]; then
 
   # drop privileges and re-execute this script unprivileged
   echo ">> dropping privileges"
-  export HOME="$APP_HOMEDIR" USER="$APP_USER" LOGNAME="$APP_USER" PATH="/usr/local/bin:/bin:/usr/bin"
+  export HOME="$APP_HOMEDIR" USER="$APP_USER" LOGNAME="$APP_USER" APP_PHP_CONF_DIR="$APP_PHP_CONF_DIR" PATH="/usr/local/bin:/bin:/usr/bin"
   exec /bin/setpriv --reuid="$APP_USER" --regid="$APP_GROUP" --init-groups --inh-caps=$caps "$0" "$@"
 fi
 
