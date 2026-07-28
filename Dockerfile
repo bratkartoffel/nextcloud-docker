@@ -1,6 +1,6 @@
 FROM alpine:3.24
 
-ARG NC_VERSION=32
+ARG NC_VERSION=33
 
 # upgrade system / install apache
 RUN apk upgrade --no-cache \
