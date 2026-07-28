@@ -53,17 +53,11 @@ if [ "$(id -u)" -eq 0 ]; then
   mv -v /etc/crontabs/root /etc/crontabs/"$APP_USER"
 
   echo ">> installing configuration"
-  if [ -x /usr/sbin/php-fpm81 ]; then
-    copyAndApplyVariables $APP_PHP_CONF_DIR /etc/php81
-    APP_PHP_CONF_DIR=/etc/php81
-  elif [ -x /usr/sbin/php-fpm82 ]; then
-    copyAndApplyVariables $APP_PHP_CONF_DIR /etc/php82
-    APP_PHP_CONF_DIR=/etc/php82
-  elif [ -x /usr/sbin/php-fpm83 ]; then
-    copyAndApplyVariables $APP_PHP_CONF_DIR /etc/php83
-    APP_PHP_CONF_DIR=/etc/php83
+  if [ -n "$PHP_VERS" ]; then
+    copyAndApplyVariables "$APP_PHP_CONF_DIR" /etc/php$PHP_VERS
+    APP_PHP_CONF_DIR=/etc/php$PHP_VERS
   else
-    echo ">>> no supported version of php found"
+    echo ">>> no installation of php found"
     rm -rv /etc/s6/php-fpm
   fi
 

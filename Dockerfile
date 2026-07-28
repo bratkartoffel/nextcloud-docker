@@ -8,11 +8,9 @@ RUN apk upgrade --no-cache \
         && apk add --no-cache \
 	nginx \
 	php${PHP_VERSION}-fpm \
-	php${PHP_VERSION}-pecl-apcu \
 	php${PHP_VERSION}-imap \
-	php${PHP_VERSION}-opcache \
-	php${PHP_VERSION}-pdo \
 	php${PHP_VERSION}-pdo_pgsql \
+	php${PHP_VERSION}-pecl-apcu \
 	php${PHP_VERSION}-pecl-imagick \
 	nextcloud${NC_VERSION} \
 	nextcloud${NC_VERSION}-activity \
