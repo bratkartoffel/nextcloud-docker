@@ -1,18 +1,19 @@
 FROM alpine:3.24
 
 ARG NC_VERSION=33
+ARG PHP_VERSION=85
 
 # upgrade system / install apache
 RUN apk upgrade --no-cache \
         && apk add --no-cache \
 	nginx \
-	php83-fpm \
-	php83-pecl-apcu \
-	php83-imap \
-	php83-opcache \
-	php83-pdo \
-	php83-pdo_pgsql \
-	php83-pecl-imagick \
+	php${PHP_VERSION}-fpm \
+	php${PHP_VERSION}-pecl-apcu \
+	php${PHP_VERSION}-imap \
+	php${PHP_VERSION}-opcache \
+	php${PHP_VERSION}-pdo \
+	php${PHP_VERSION}-pdo_pgsql \
+	php${PHP_VERSION}-pecl-imagick \
 	nextcloud${NC_VERSION} \
 	nextcloud${NC_VERSION}-activity \
 	nextcloud${NC_VERSION}-app_api \
